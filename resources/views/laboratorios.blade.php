@@ -4,53 +4,84 @@
 
 @section('content')
 
-<h2>Laboratórios disponíveis</h2>
+<div class="pagina-laboratorios">
 
-<p class="muted">
-    Estes são os laboratórios disponíveis para reserva no prédio principal.
-</p>
+    <div class="cabecalho-laboratorios">
+        <h1>Laboratórios</h1>
 
-<div class="grid">
+        <p>
+            Escolha um laboratório e consulte as opções disponíveis para reserva.
+        </p>
+    </div>
 
-    @forelse ($laboratorios as $laboratorio)
+    <div class="grid-laboratorios">
 
-        <div class="card">
+        @forelse ($laboratorios as $laboratorio)
 
-            <h3>{{ $laboratorio->nome }}</h3>
+            <div class="card-laboratorio">
 
-            <p>
-                <strong>Localização:</strong><br>
-                {{ $laboratorio->localizacao }}
-            </p>
+                <div class="foto-laboratorio">
+                    <img
+                        src="{{ asset('imgs/img-laboratorio.jpg') }}"
+                        alt="Foto do {{ $laboratorio->nome }}"
+                    >
+                </div>
 
-            @if ($laboratorio->capacidade)
-                <p>
-                    <strong>Capacidade:</strong><br>
-                    {{ $laboratorio->capacidade }} pessoas
+                <h2>
+                    {{ $laboratorio->nome }}
+                </h2>
+
+                <p class="localizacao-laboratorio">
+                    {{ $laboratorio->localizacao }}
                 </p>
-            @endif
 
-            <p>
-                <strong>Descrição:</strong><br>
-                {{ $laboratorio->descricao }}
-            </p>
+                <div class="divisor-laboratorio"></div>
 
-            <a
-                href="{{ route('reservas.nova', ['laboratorio' => $laboratorio->id]) }}"
-                class="botao botao-verde"
-            >
-                Reservar
-            </a>
+                <div class="dados-laboratorio">
 
-        </div>
+                    @if ($laboratorio->capacidade)
+                        <p>
+                            <span>👥</span>
 
-    @empty
+                            <strong>
+                                Capacidade:
+                            </strong>
 
-        <div class="card">
-            <p>Nenhum laboratório cadastrado.</p>
-        </div>
+                            {{ $laboratorio->capacidade }} pessoas
+                        </p>
+                    @endif
 
-    @endforelse
+                    
+                </div>
+
+                <a
+                    href="{{ route('reservas.nova', ['laboratorio' => $laboratorio->id]) }}"
+                    class="botao botao-verde botao-reservar-laboratorio"
+                >
+                    Reservar
+                </a>
+
+            </div>
+
+        @empty
+
+            <div class="card">
+                <p>
+                    Nenhum laboratório cadastrado.
+                </p>
+            </div>
+
+        @endforelse
+
+    </div>
+
+    <div class="aviso-disponibilidade">
+        ◷
+
+        <span>
+            A disponibilidade depende da data e do horário escolhidos.
+        </span>
+    </div>
 
 </div>
 
